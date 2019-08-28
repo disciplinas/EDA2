@@ -66,3 +66,10 @@ int main(){
 
     return 0;
 }
+
+char last_letter(struct qnode* n){
+    int len = strlen(n->key);
+    const char *last_one = &n->key[len-1];
+
+    return *last_one;
+}
