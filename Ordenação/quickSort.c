@@ -5,15 +5,17 @@ static int separa(int *v, int l, int r);
 void quicksort(int *v, int l, int r);
 
 int main(){
-    int *v;
-    int i =0;
-     while (i < 5){
-        scanf("%d\n", &v[i]);
+    //int v[] = {12, 7, 23, 1, 23, 102, 5};
+    int i =0, aux = 0;
+    int *vector;
+    vector = malloc(sizeof(int)*1000);
+    while (scanf(" %d\n", &vector[i]) == 1){
+        aux = i;
         i++;
     }
-    quicksort(v, 0, 5);
+    quicksort(vector, 0, i);
     for(int h = 0; h < i; h++){
-        printf("%d ", v[h]);
+        printf("%d: %d\n", h, vector[h]);
     }
     return 0;
 }
@@ -21,12 +23,12 @@ int main(){
 static int separa(int *v, int l, int r){
     int c =v[r];
     int j = l;
-    for(int i = l; i <= r; i++){
+    for(int i = l; i < r; ++i){
         if(v[i] <= c){
             int aux = v[i];
             v[i] = v[j];
             v[j] = v[i];
-            j++;
+            ++j;
         }
     }
     int aux = v[j];
