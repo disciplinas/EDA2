@@ -11,16 +11,20 @@ void eec(int index, int *vector, int left, int right);
 
 int main(){
     int *v, i=0;
-    v = malloc(sizeof(int) * 1000);
+    v = malloc(sizeof(int) * 10000);
 
     while(scanf("%d", &v[i]) == 1){
         i++;
     }
     mergeSort(v, 0, i); 
 
-    for(int y = 0; y < 1000; y++){
-        printf("%d\n", v[y]);
-    }
+    for(int y = 1; y <= i; y++){
+        if ((y+1) > i)
+        {
+            printf("%d\n", v[y]);
+        }else
+            printf("%d ", v[y]);            
+    }   
 
     return 0;
 }

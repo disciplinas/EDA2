@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.vue": "html",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "algorithm": "c"
+    }
+}

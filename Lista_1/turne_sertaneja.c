@@ -52,50 +52,54 @@ struct qnode* dequeue(struct queue* q){
     return temp;
 
 }
-
+void leia_string(char *s);
 
 int main(){
     struct queue* q = createQueue();
     struct queue* q2 = createQueue();
     char *input;
+    char *aux;
     int i = 1;
-    char last[26];
+    char last_l[26];
+    char first_f[26];
     input = (char*)malloc(sizeof(char) * 26);
-    while(fgets(input, sizeof(input), stdin) != NULL){
-        //printf("%s", input);
+    aux = malloc(sizeof(char) * 26);
+    while(fgets(aux, sizeof(aux), stdin) != NULL){
+        leia_string(input);
         enqueue(q, input);
     }
 
     struct qnode* n = dequeue(q);
     struct qnode* n2;
-    //printf("%s\n", n->key);
+
     int len = strlen(n->key);
-    char last_one = n->key[len-2];
+
+    char first_one = n->key[0];
+    char last_one = n->key[len];
+
+    //printf("F: %c\n", first_one);
+    printf("L: %c\n",  last_one);
+
     enqueue(q2, n->key);
-    last[0] = last_one;
-    //printf("last: %c\n", last[0]);
-    for(n = dequeue(q); n; n = n->next){
+    last_l[0] = last_one;
+    first_f[1] = n->key[len-len];
+
+    /*for(n = dequeue(q); n; n = n->next){
         len = strlen(n->key);
-        char last_one_ = n->key[len-2];
+        char last_one_ = n->key[len-1];
         last[i] = last_one_;
-        if(tolower(last[i-1]) == tolower(last[i])){
+        if(tolower(last[i]) == tolower(last[i-1])){
             enqueue(q->last, n->key);
+            printf("È igual: %s\n", n->key);
         }else{
             enqueue(q2, n->key);
         }
-    }
+        i++;
+    }*/
 
-    for(n = dequeue(q); n; n=n->next){
-        enqueue(q2, n->key);
-    }
-
-    if(tolower('A') == 'a'){
-        printf("Claro que e pow\n");
-    }
-
-    for(n2 = dequeue(q2); n2; n2 = n2->next){
-        printf("%s", n2->key);
-    }
+    /*for(n = dequeue(q); n; n = n->next){
+        printf("%s", n->key);
+    }*/
 
     return 0;
 }
@@ -106,3 +110,21 @@ char last_letter(struct qnode* n){
 
     return *last_one;
 }
+
+void leia_string(char *s) {
+  int c, i;
+  char *p;
+  c = getchar();
+  if (c =='\n') {
+    c =getchar();
+  } /* fim-if */
+  i = 0;
+  p=s;
+  while (c!='\n') {
+    (*s) = c;
+    c = getchar();
+    i++;
+    s=p+i;
+  } /* fim-while */
+  (*s) = '\0';
+} /* fim-leia_string */
