@@ -1,0 +1,97 @@
+DEADLOCKS
+---------
+
+1) Liste trÃªs exemplos de deadlocks nÃ£o relacionados a um ambiente de
+computaÃ§Ã£o.
+
+2) Ã‰ possÃ­vel haver um deadlock envolvendo apenas um processo? Explique sua
+resposta.
+
+
+MEMÃ“RIA
+-------
+
+1)Considere um sistema cuja gerÃªncia de memÃ³ria Ã© feita atravÃ©s de partiÃ§Ãµes
+variÃ¡veis. Nesse momento, existem as seguintes lacunas (Ã¡reas livres): 10K,
+4K, 20K, 18K, 7K, 9K, 12K e 13K, nessa ordem. Quais espaÃ§os serÃ£o ocupados
+pelas solicitaÃ§Ãµes: 5K, 10K e 6K, nessa ordem, se:
+    Â¿ first-fit for utilizado?
+    Â¿ best-fit for utilizado?
+    Â¿ worst-fit for utilizado?
+
+2)calcule o nÃºmero de bits para pÃ¡gina, quadro e deslocamento.
+Â¿ MemÃ³ria lÃ³gica = 512K, MemÃ³ria fÃ­sica = 512K, Tamanho de pÃ¡gina = 8K
+Â¿ Tamanho de pÃ¡gina = 4K, NÃºmero de pÃ¡ginas = 8, NÃºmero de quadros = 16
+
+3) O que Ã© paginaÃ§Ã£o?
+4) Qual Ã© a diferenÃ§a entre paginaÃ§Ã£o e segmentaÃ§Ã£o?
+
+5)Considere que os processos da tabela abaixo devem ser executados em um SO
+com paginaÃ§Ã£o. A memÃ³ria total Ã© de 64K, o tamanho das pÃ¡ginas Ã© de 4K e o
+SO ocupa 8K. Mostre como seria a alocaÃ§Ã£o de quadros para cada processo.
+Processo | Mem. (K) | T. Cheg | T. Exec
+P1         8          0          10
+P2         6          1          15
+P3         15         2          10
+P4         5          3          14
+P5         10         15         5
+
+5) Qual a diferenÃ§a entre fragmentaÃ§Ã£o interna e externa da memÃ³ria
+principal?
+
+6) Qual a principal diferenÃ§a entre os sistemas que implementam paginaÃ§Ã£o e
+segmentaÃ§Ã£o?
+
+7) Para que serve o bit de validade nas tabelas de pÃ¡ginas e segmentos?
+
+8) Nos sistemas com paginaÃ§Ã£o, a rotina para tratamento de page faults estÃ¡
+residente na memÃ³ria principal. Esta rotina pode ser removida da memÃ³ria em
+algum momento? O que aconteceria se esta rotina nÃ£o estivesse na memÃ³ria
+principal durante a ocorrÃªncia de um page fault?
+
+9) Descreva como ocorre a fragmentaÃ§Ã£o interna em um sistema que implementa
+paginaÃ§Ã£o.
+
+VIRTUAL
+-------
+
+1) O que Ã© memÃ³ria virtual?
+
+2) Quais das seguintes tÃ©cnicas e estruturas de programaÃ§Ã£o sÃ£o "boas" para
+um ambiente de paginaÃ§Ã£o por demanda? Quais delas sÃ£o "mÃ¡s"? Explique suas
+respostas.
+    a. Pilha
+    b. Tabela de sÃ­mbolos submetida Ã  funÃ§Ã£o hash
+    c. Busca seqÃ¼Ãªncial
+    d. Busca BinÃ¡ria
+    e. CÃ³digo Puro
+    f. OperaÃ§Ãµes em vetor
+    g. SimulaÃ§Ã£o
+
+3) Considere os seguintes algoritmos de substituiÃ§Ã£o de pÃ¡ginas. Classifique
+estes algoritmos em uma escala de cinco pontos do "ruim" ao "perfeito" de
+acordo com a sua taxa de erros de pÃ¡gina. Separe os algoritmos afetados pela
+anomalia de Belady daqueles que nÃ£o o sÃ£o.
+    a. SubstituiÃ§Ã£o LRU
+    b. SubstituiÃ§Ã£o FIFO
+    c. SubstituiÃ§Ã£o Ã“tima
+    d. SubstituiÃ§Ã£o da segunda chance
+
+4) Considere a seguinte seqÃ¼Ãªncia de referÃªncias de pÃ¡ginas:
+    1,2,3,4,2,1,5,6,2,1,2,3,7,6,3,2,1,2,3,6
+
+Quantos erros de pÃ¡ghinas iriam ocorrer para os seguintes algoritmos de
+substituiÃ§Ã£o , considerando um, dois, trÃªs, quatro, cinco, seis ou sete
+quadros? Lembre-se de que todos os quadros estÃ£o inicialmente vazios, de
+modo que a primeira pÃ¡gina de cada um implicarÃ¡ em um erro de pÃ¡gina.
+    - SubstituiÃ§Ã£o LRU
+    - SubstituiÃ§Ã£o Ã“tima
+    - SubstituiÃ§Ã£o do RelÃ³gio
+    - SubstituiÃ§Ã£o WSClock
+
+
+5) VocÃª consegue imaginar alguma situaÃ§Ã£o em que dar suporte Ã  memÃ³ria
+virtual seria uma mÃ¡ ideia e o que se ganha quando nÃ£o Ã© necessÃ¡rio o
+suporte a memÃ³ria virtual? Explique
+
+6) ExercÃ­cios do capÃ­tulo 3 do Tanembaum
