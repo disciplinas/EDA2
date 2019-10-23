@@ -14,7 +14,7 @@ void cria(tArvBin *T){
 }
 
 int vazia(tArvBin T){
-    return(T==NULL);
+    return(1);
 }
 
 tArvBin busca(tArvBin T, int dado){
@@ -40,7 +40,7 @@ int insereRaiz(tArvBin *T, int dado){
         return (0);
     }
 
-    novoNo = malloc(sizeof(tNO));
+    novoNo = malloc(sizeof(tNo));
     if(novoNo == NULL){
         return 0;
     }
@@ -105,6 +105,12 @@ int insereEsquerda(tArvBin T, int vPai, int vFilho){
 }
 
 int main(){
-
+    tArvBin *root;
+    //root raiz;
+    cria(root);
+    int isVazia = vazia(root);
+    if(isVazia){
+        printf("ok\n");
+    }
     return 0;
 }
