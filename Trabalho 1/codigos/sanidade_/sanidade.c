@@ -3,6 +3,19 @@
 #include<string.h>
 
 
+typedef struct pilha {
+    unsigned ant, atual, prox;
+    struct pilha *next;
+    struct pilha *back; 
+    struct pilha *current;
+}pilha;
+
+pilha *sanity;
+
+void criaPilha();
+void empilha(unsigned atual);
+unsigned long desempilha();
+
 typedef struct sana {
     int visitado;
     unsigned long atual, ant, prox;
@@ -20,11 +33,8 @@ unsigned long buscarBin(struct sana* arr, int l, int r, unsigned long x);
 struct sana arraySanidade[1000000];
 
 int main(){
-    //struct sana arraySanidade[199999];
-    //unsigned long *array;
     unsigned att, ante, proxi;
 
-    //scanf("%x%*c", &arraySanidade[2].atual);
     int i = 0;
     while(scanf("%x%*c", &arraySanidade[i].atual) > 0){
         
@@ -32,69 +42,62 @@ int main(){
         scanf("%x%*c", &arraySanidade[i].prox); 
         i++;
     }
-    //mergeSort(arraySanidade, 0, i);
 
-    /* arraySanidade[0].atual = 'a';
-    arraySanidade[1].atual = 'f';
-    arraySanidade[2].atual = 'e';
-    arraySanidade[3].atual = 'b';
-    arraySanidade[4].atual = 'c';
-    //arraySanidade[5].atual = 'd';
+    if(arraySanidade[0].ant != arraySanidade[1].prox){
+        printf("insana\n");
+        return 0;
+    }
 
-    arraySanidade[0].ant = '0';
-    arraySanidade[1].ant = 'e';
-    arraySanidade[2].ant = 'd';
-    arraySanidade[3].ant = 'a';
-    arraySanidade[4].ant = 'b';
-    //  arraySanidade[5].ant = 'c';
-
-    arraySanidade[0].prox = 'b';
-    arraySanidade[1].prox = '0';
-    arraySanidade[2].prox = 'f';
-    arraySanidade[3].prox = 'c';
-    arraySanidade[4].prox = 'd';
-   // arraySanidade[5].prox = 'e'; */
-    
-    //int i = 6;
-
-    //array= malloc((sizeof(unsigned long) * i));
-    unsigned long array[i];   
+    unsigned long current[i], anterior[i], proximo[i];
     int sizeArr = 0; 
     for(sizeArr=0; sizeArr < i; sizeArr++){
         unsigned long atual = arraySanidade[sizeArr].atual;
-        //printf("%d\n", atual);
-        array[sizeArr] = atual;
+        unsigned long ant = arraySanidade[sizeArr].ant;
+        unsigned long prox = arraySanidade[sizeArr].prox;
+        current[sizeArr] = atual;
+        anterior[sizeArr] = ant;
+        proximo[sizeArr] = prox;
     }
 
-    //printf("%d\n\n", array[1]);
-    mergeSort(array, 0,i);
+    mergeSort(current, 0,i);
+
     //corrigir o 0 que vem no array depois da ordenação
-    corrigirVetor(array, sizeArr);
+    corrigirVetor(current, sizeArr);
+    //corrigirVetor(anterior, sizeArr);
+    //corrigirVetor(proximo, sizeArr);
 
-    for(int j = 0; j <= i; j++){
-        printf("%d\n", array[j]);
+    for(int j = 0; j < i; j++){
+        //printf("%d\n", current[j]);
+        empilha(current[j]);
     }
 
-    int tam = sizeof(array) / sizeof(array[1]);
-    //printf("Tam: %d\n", tam);
-    /* int result = buscarBin(arraySanidade, 0, tam, 98);
     
-    printf("Result: %d\n", result); */
+
+    int tam = sizeof(current) / sizeof(current[1]);
+    
     int checked = 0;
+    
 
     for(int k = 0; k < sizeArr; k++){
-        if(buscarBin(arraySanidade, 0, tam, array[k]) != -1){
-            if(arraySanidade[k+1].ant == arraySanidade[k].atual){
-                checked = 1;
+        if(buscarBin(arraySanidade, 0, tam, current[k]) != -1){
+            for (int j = 0; j < sizeArr - 1; j++){
+                if(proximo[1] == 0 && proximo[j] != 0 && anterior[0] == 0 && anterior[j] != 0 && current[j] != 0){
+                    if(buscarBin(arraySanidade, 0, tam, proximo[j]) != -1){
+                        //printf("%d\n", proximo[j]);
+                        checked = 1;
+                    }
+                }else {
+                    checked = 0;
+                }
             }
         }
     }
 
     if(checked){
-        printf("sana");
+        printf("sana\n");
     }else
     {
-        printf("insana");
+        printf("insana\n");
     }
     
     return 0;
@@ -202,10 +205,36 @@ unsigned long buscarBin(struct sana* arr, int l, int r, unsigned long x){
     // present in array 
     return -1; 
 }
+
 void corrigirVetor(unsigned long *vetor, int size){
     int i = 0;
     for(i = 1; i < size; i++){
         int aux = vetor[i];
         vetor[i-1] = aux;
     }
+}
+
+void criaPilha(){
+    sanity = malloc(sizeof(sanity));
+    sanity->back = NULL;
+    sanity->current = NULL;
+    sanity->next = NULL;
+}
+
+void empilha(unsigned atual){
+    pilha *p = malloc(sizeof(sanity));
+    //p->ant = ant;
+    p->atual = atual;
+    //p->prox = prox;
+    p->next = sanity->next;
+    sanity->next = p;
+}
+
+unsigned long desempilha(){
+    pilha * p;
+    p = sanity->next;
+    unsigned x = p->atual;
+    sanity->prox = p->prox;
+    free(p);
+    return x;
 }

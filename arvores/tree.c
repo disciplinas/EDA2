@@ -1,116 +1,172 @@
-#include<stdio.h>
-#include<stdlib.h>
+/* Implementação de árvore binária */
 
-typedef struct no{
-    int conteudo;
-    struct no *esq;
-    struct no *dir;
-} tNo;
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef tNo *tArvBin;
+/* Cada nó armazena três informações:
+   nesse caso um número (num),
+   ponteiro para subárvore à direita (sad)
+   e ponteiro para subárvore à esquerda (sae).*/
+typedef struct tree
+{
+  int num;
+  struct tree* sad;
+  struct tree* sae;
+} Tree;
 
-void cria(tArvBin *T){
-    *T = NULL;
+/* A estrutura da árvore é representada por um ponteiro
+   para o nó raiz. Com esse ponteiro, temos acesso aos
+   demais nós. */
+
+/* Função que cria uma árvore */
+Tree* createTree()
+{
+  /* Uma árvore é representada pelo endereço do nó raiz,
+     essa função cria uma árvore com nenhum elemento,
+     ou seja, cria uma árvore vazia, por isso retorna NULL. */
+  return NULL;
 }
 
-int vazia(tArvBin T){
-    return(1);
+/* Função que verifica se uma árvore é vazia */
+int treeIsEmpty(Tree* t)
+{
+  /* Retorna 1 se a árvore for vazia e 0 caso contrário */
+  return t == NULL;
+
 }
 
-tArvBin busca(tArvBin T, int dado){
-    tArvBin achou;
-    if(T==NULL){
-        return NULL;
-    }
-
-    if(T->conteudo == dado){
-        return T;
-    }
-
-    achou = busca(T->esq, dado);
-    if(achou == NULL){
-        achou = busca(T->dir,dado);
-    }
-    return achou;
+/* Função que mostra a informação da árvore */
+void showTree(Tree* t)
+{
+  /* Essa função imprime os elementos de forma recursiva */
+  
+  printf("<"); /* notação para organizar na hora de mostrar os elementos */
+  if(!treeIsEmpty(t)) /* se a árvore não for vazia... */
+  {
+    /* Mostra os elementos em pré-ordem */
+    printf("%d ", t->num); /* mostra a raiz */
+    showTree(t->sae); /* mostra a sae (subárvore à esquerda) */
+    showTree(t->sad); /* mostra a sad (subárvore à direita) */
+  }
+  printf(">"); /* notação para organizar na hora de mostrar os elementos */
 }
 
-int insereRaiz(tArvBin *T, int dado){
-    tNo *novoNo;
-    if(*T != NULL){
-        return (0);
+/* Função que insere um dado na árvore */
+void insertTree(Tree** t, int num)
+{
+  /* Essa função insere os elementos de forma recursiva */
+  if(*t == NULL)
+  {
+    *t = (Tree*)malloc(sizeof(Tree)); /* Aloca memória para a estrutura */
+    (*t)->sae = NULL; /* Subárvore à esquerda é NULL */
+    (*t)->sad = NULL; /* Subárvore à direita é NULL */
+    (*t)->num = num; /* Armazena a informação */
+  } else {
+    if(num < (*t)->num) /* Se o número for menor então vai pra esquerda */
+    {
+      /* Percorre pela subárvore à esquerda */
+      insertTree(&(*t)->sae, num);
     }
-
-    novoNo = malloc(sizeof(tNo));
-    if(novoNo == NULL){
-        return 0;
+    if(num > (*t)->num) /* Se o número for maior então vai pra direita */
+    {
+      /* Percorre pela subárvore à direita */
+      insertTree(&(*t)->sad, num);
     }
-
-    novoNo->conteudo = dado;
-    novoNo->esq = NULL;
-    novoNo->dir = NULL;
-    *T = novoNo;
-    return 1;
+  }
 }
 
-int insereDireita(tArvBin T, int vPai, int vFilho){
-    tNo *f, *p, *novoNo;
-
-    f = busca(T, vFilho);
-    if(f != NULL){
-        return 0;
-    }
-
-    p = busca(T, vPai);
-    if(p == NULL)
-        return 0;
-    if(p->dir != NULL){
-        return 0;
-    }
-    novoNo = malloc(sizeof(tNo));
-    if(novoNo == NULL){
-        return (0);
-    }
-
-    novoNo->conteudo = vFilho;
-    novoNo->esq = NULL;
-    novoNo->dir = NULL;
-    p->dir = novoNo;
-    return 1;
-}
-
-int insereEsquerda(tArvBin T, int vPai, int vFilho){
-    tNo *f, *p, *novoNo;
-
-    f = busca(T, vFilho);
-    if(f != NULL){
-        return 0;
-    }
-
-    p = busca(T, vPai);
-    if(p == NULL)
-        return 0;
-    if(p->esq != NULL){
-        return 0;
-    }
-    novoNo = malloc(sizeof(tNo));
-    if(novoNo == NULL){
-        return (0);
-    }
-
-    novoNo->conteudo = vFilho;
-    novoNo->esq = NULL;
-    novoNo->dir = NULL;
-    p->esq = novoNo;
-    return 1;
-}
-
-int main(){
-    tArvBin *root;
-    //root raiz;
-    cria(root);
-    int isVazia = vazia(root);
-    if(isVazia){
-        printf("ok\n");
-    }
+/* Função que verifica se um elemento pertence ou não à árvore */
+int isInTree(Tree* t, int num) {
+  
+  if(treeIsEmpty(t)) { /* Se a árvore estiver vazia, então retorna 0 */
     return 0;
+  }
+  
+  /* O operador lógico || interrompe a busca quando o elemento for encontrado */
+  return t->num==num || isInTree(t->sae, num) || isInTree(t->sad, num);
+}
+
+void exibePreOrdem(Tree* t){
+    if(t == NULL){
+        return;
+    }
+
+    printf("%d ", t->num);
+    if(t->sae != NULL){
+        exibePreOrdem(t->sae);
+    }
+    if(t->sad != NULL){
+        exibePreOrdem(t->sad);
+    }
+}
+
+void exibeInOrder(Tree* t){
+    if(t == NULL){
+        return ;
+    }
+
+    if(t->sae != NULL){
+        exibeInOrder(t->sae);
+    }
+    printf("%d ", t->num);
+    if(t->sad != NULL){
+        exibeInOrder(t->sad);
+    }
+}
+
+void exibePosOrder(Tree* t){
+    if(t == NULL){
+        return;
+    }
+    if(t->sae != NULL){
+        exibePosOrder(t->sae);
+    }
+    if(t->sad != NULL){
+        exibePosOrder(t->sad);
+    }
+    printf("%d ", t->num);
+}
+
+int main()
+{
+  Tree* t = createTree(); /* cria uma árvore */
+  
+  insertTree(&t, 12); /* insere o elemento 12 na árvore */
+  insertTree(&t, 15); /* insere o elemento 15 na árvore */
+  insertTree(&t, 10); /* insere o elemento 10 na árvore */
+  insertTree(&t, 13); /* insere o elemento 13 na árvore */
+   
+  printf("Exibição normal.!\n");
+  showTree(t); /* Mostra os elementos da árvore em pré-ordem */
+  
+  if(treeIsEmpty(t)) /* Verifica se a árvore está vazia */
+  {
+    printf("\n\nArvore vazia!!\n");
+  } else {
+    printf("\n\nArvore NAO vazia!!\n");
+  }
+  
+  /*if(isInTree(t, 15)) { // Verifica se o número 15 pertence a árvore //
+    printf("\nO numero 15 pertence a arvore!\n");
+  } else {
+     printf("\nO numero 15 NAO pertence a arvore!\n");
+  }
+  
+  if(isInTree(t, 22)) { // Verifica se o número 22 pertence a árvore 
+    printf("\nO numero 22 pertence a arvore!\n\n");
+  } else {
+     printf("\nO numero 22 NAO pertence a arvore!\n\n");
+  }*/
+
+  printf("Exibição em pre-ordem\n");
+  exibePreOrdem(t);
+  //free(t);
+  printf("\nExibição in-order\n");
+  exibeInOrder(t);
+  printf("\nExibição pos-ordem\n");
+  exibePosOrder(t);
+  
+  free(t); /* Libera a memória alocada pela estrutura árvore */
+  
+  return 0;
 }
